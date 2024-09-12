@@ -139,15 +139,15 @@ public:
         if (camPort.getOutputCount()>0)
         {
             yarp::os::Bottle cmd,rep;
-            cmd.addVocab(yarp::os::Vocab::encode("visr"));
-            cmd.addVocab(yarp::os::Vocab::encode("get"));
-            cmd.addVocab(yarp::os::Vocab::encode("fov"));
+            cmd.addVocab32(yarp::os::Vocab32::encode("visr"));
+            cmd.addVocab32(yarp::os::Vocab32::encode("get"));
+            cmd.addVocab32(yarp::os::Vocab32::encode("fov"));
             if (camPort.write(cmd,rep))
             {
                 if (rep.size()>=5)
                 {
-                    fov_h=rep.get(3).asDouble();
-                    fov_v=rep.get(4).asDouble();
+                    fov_h=rep.get(3).asFloat64();
+                    fov_v=rep.get(4).asFloat64();
                     yInfo()<<"camera fov_h (from sensor) ="<<fov_h;
                     yInfo()<<"camera fov_v (from sensor) ="<<fov_v;
                     return true;
@@ -311,8 +311,8 @@ public:
     {
         this->rf=&rf;
         std::string moduleName = rf.check("name", yarp::os::Value("yarp-blob"), "module name (string)").asString();
-        double closeRange = rf.check("minVal", yarp::os::Value(0.25), "minVal depth value (double)").asDouble();
-        double longRange = rf.check("maxVal", yarp::os::Value(1.25), "maxVal depth value (double)").asDouble();
+        double closeRange = rf.check("minVal", yarp::os::Value(0.25), "minVal depth value (double)").asFloat64();
+        double longRange = rf.check("maxVal", yarp::os::Value(1.25), "maxVal depth value (double)").asFloat64();
 
         setName(moduleName.c_str());
 
